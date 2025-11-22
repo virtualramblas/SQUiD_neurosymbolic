@@ -14,6 +14,7 @@ class OllamaChatClient:
         model: str = "qwen2.5:3b",
         host: str = "http://localhost:11434",
         system_prompt: Optional[str] = None,
+        temperature: float = 0.2,
     ):
         self.model = model
         self.host = host.rstrip("/")
