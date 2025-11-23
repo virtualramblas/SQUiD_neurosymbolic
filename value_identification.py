@@ -39,7 +39,7 @@ def extract_symbolic_triplets(text: str):
 
     return triplets
 
-def generate_schema_aligned_triplets(ollama_client: OllamaChatClient, schema: str, text: str):
+def generate_schema_aligned_triplets_ollama(ollama_client: OllamaChatClient, schema: str, text: str):
     """Generate, using an LLM, schema-aligned triplets, in the form (table, column, value)
 
     Args:

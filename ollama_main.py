@@ -6,7 +6,7 @@ from prompts import (get_dataset_generation_system_prompt,
                     get_triplet_generation_system_prompt
 )
 from schema_generator import generate_schema_ollama
-from value_identification import extract_symbolic_triplets, generate_schema_aligned_triplets
+from value_identification import extract_symbolic_triplets, generate_schema_aligned_triplets_ollama
 
 def main(input_text: str, model_id: str):
     client = OllamaChatClient(
@@ -32,7 +32,7 @@ def main(input_text: str, model_id: str):
     ### Generate schema-aligned tryplets ###
     client.reset()
     client.add_assistant_message(get_triplet_generation_system_prompt())
-    schema_aligned_triplets = generate_schema_aligned_triplets(client, generated_schema, generated_mock_text)
+    schema_aligned_triplets = generate_schema_aligned_triplets_ollama(client, generated_schema, generated_mock_text)
     print(schema_aligned_triplets)
 
 if __name__ == "__main__":
