@@ -3,7 +3,7 @@ from ollama_client import OllamaChatClient
 from prompts import get_schema_generation_user_prompt_template_cot
 
 def generate_schema_ollama(ollama_client: OllamaChatClient, text: str) -> str:
-    """Generates databaase schema for the input unstructured text.
+    """Generates database schema for the input unstructured text.
 
     Args:
         ollama_client: an instance of the client to chat with a model hosted in a Ollama server.

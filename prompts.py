@@ -87,3 +87,29 @@ def get_schema_generation_user_prompt_template_cot(text):
     Now output the schema as per the system instructions.
     ### Output:
     """
+
+def get_triplet_generation_system_prompt():
+    return """
+    You are an expert in Open Information Extraction and relational databases. Given a database schema
+    and a natural language paragraph, your task is to extract all factual information from each sentence
+    of the paragraph in the form of triplets, structured as a Python list of dictionaries.
+    Each dictionary should have the following keys:'table_name', 'column_name', and'value'. Ensure that
+    the extracted triplets strictly follow the format: 
+    {'table_name': <table_name>,'column_name': <column_name>,'value': }.
+    Only extract values that explicitly appear in the input sentence. The table_name and column_name must
+    match the schema. Do not invent values or infer unstated facts. You don"t need to generate triplets
+    for values that are not mentioned. DO NOT generate code, do the task yourself.
+    """
+
+def get_triplet_generation_user_prompt_template(schema, text):
+    return f"""
+    You will be given a database schema and a sentence. Extract all relevant triplets of the form:
+    {{"table_name": <table_name>, "column_name": <column_name>, "value": <value>}}
+    Your output must be a valid Python list of dictionaries. Do not include any explanations or notes-
+    only return the list.
+    Extract triplets for the following input:
+    Schema:
+    {schema}
+    Sentence: {text}
+    Triplets:
+    """
