@@ -17,6 +17,7 @@ def main(input_text: str, model_id: str):
     ### Generate mock text data ###
     generated_mock_text = generate_mock_data_ollama(client, input_text)
     print(generated_mock_text)
+    generated_mock_text_list = [generated_mock_text]
 
     ### Generate database schema ###
     client.reset()
@@ -24,16 +25,23 @@ def main(input_text: str, model_id: str):
     generated_schema = generate_schema_ollama(client, generated_mock_text)
     print(generated_schema)
 
+
     ### Generate symbolic triplets ###
-    symbolic_triplets = extract_symbolic_triplets(generated_mock_text)
-    for triplet in symbolic_triplets:
-        print(triplet)
+    symbolic_triplet_list = []
+    for paragraph in generated_mock_text_list:
+        symbolic_triplets = extract_symbolic_triplets(paragraph)
+        for triplet in symbolic_triplets:
+            print(triplet)
+            symbolic_triplet_list.append(triplet)
 
     ### Generate schema-aligned tryplets ###
     client.reset()
     client.add_assistant_message(get_triplet_generation_system_prompt())
-    schema_aligned_triplets = generate_schema_aligned_triplets_ollama(client, generated_schema, generated_mock_text)
-    print(schema_aligned_triplets)
+    schema_aligned_triplet_list = []
+    for paragraph in generated_mock_text_list:
+        schema_aligned_triplets = generate_schema_aligned_triplets_ollama(client, generated_schema, paragraph)
+        print(schema_aligned_triplets)
+        schema_aligned_triplet_list.append(schema_aligned_triplets)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Synthesis of relational databases from unstructured text")
